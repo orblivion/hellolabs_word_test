@@ -4,4 +4,4 @@ def generate_files(dictionary, sequences_fname="sequences", words_fname="words")
 
 
 def generate_output(dictionary):
-    return [], []
+    return set([])

@@ -31,7 +31,7 @@ class FileGenerationTest(unittest.TestCase):
 
 class OutputGenerationTest(unittest.TestCase):
     def test_empty_input(self):
-        self.assertEqual(generate_output([]), ([], []))
+        self.assertEqual(generate_output([]), set([]))
 
 if __name__ == '__main__':
     unittest.main()
