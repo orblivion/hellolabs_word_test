@@ -1,7 +1,7 @@
 import unittest
 import os
 
-from main import generate_files, generate_output
+from main import generate_files, generate_output, get_sub_sequences
 
 class FileGenerationTest(unittest.TestCase):
     def setUp(self):
@@ -28,6 +28,22 @@ class FileGenerationTest(unittest.TestCase):
         for fname in ["test_sequences", "test_words"]:
             if os.path.exists(fname):
                 os.remove(fname)
+
+class OutputGenerationHelperTest(unittest.TestCase):
+
+    def test_get_sub_sequences_empty(self):
+        self.assertEqual(list(get_sub_sequences("")), [])
+
+    def test_get_sub_sequences_short(self):
+        self.assertEqual(list(get_sub_sequences("hi")), [])
+
+    def test_get_sub_sequences_single(self):
+        self.assertEqual(list(get_sub_sequences("cows")), ["cows"])
+
+    def test_get_sub_sequences_multiple(self):
+        # Tests decapitalization of letters, and non-skipping of repeat sequences
+        expected_output = ["miss", "issi", "ssis", "siss", "issi", "ssip", "sipp", "ippi"]
+        self.assertEqual(list(get_sub_sequences("Mississippi")), expected_output)
 
 class OutputGenerationTest(unittest.TestCase):
     def test_empty_input(self):
