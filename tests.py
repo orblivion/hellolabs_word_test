@@ -19,9 +19,16 @@ class OutputGenerationHelperTest(unittest.TestCase):
         Tests decapitalization of letters, and non-skipping of repeat
         sequences.
         """
+        self.assertEqual(list(get_sub_sequences("Mississippi")),
+            ["miss", "issi", "ssis", "siss", "issi", "ssip", "sipp", "ippi"])
 
-        expected_output = ["miss", "issi", "ssis", "siss", "issi", "ssip", "sipp", "ippi"]
-        self.assertEqual(list(get_sub_sequences("Mississippi")), expected_output)
+    def test_split_words(self):
+        """
+        Tests that numbers are not included in sequences, but do split
+        sequences of letters.
+        """
+        self.assertEqual(list(get_sub_sequences("abc1defg2hijkl3")),
+            ["defg", "hijk", "ijkl"])
 
 class OutputGenerationTest(unittest.TestCase):
     def test_empty_input(self):
