@@ -18,8 +18,15 @@ def get_sub_sequences(word):
 
 def generate_output(dictionary):
     sequence_record = {}
-    if not dictionary: return set([])
-    word = dictionary[0]
-    for sequence in get_sub_sequences(word):
-        sequence_record[sequence] = word
-    return set(sequence_record.iteritems())
+    for word in dictionary:
+        for sequence in get_sub_sequences(word):
+            if sequence not in sequence_record:
+                # It's a new sequence. Include it until further notice
+                sequence_record[sequence] = word
+            elif sequence_record[sequence] != word:
+                # It's a repeated sequence. It was in a different word,
+                # or was already excluded. Exclude it.
+                sequence_record[sequence] = None
+    for sequence, word in sequence_record.iteritems():
+        if word is not None:
+            yield sequence, word

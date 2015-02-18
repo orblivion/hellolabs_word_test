@@ -42,7 +42,8 @@ class OutputGenerationHelperTest(unittest.TestCase):
 
     def test_get_sub_sequences_multiple(self):
         """
-        Tests decapitalization of letters, and non-skipping of repeat sequences
+        Tests decapitalization of letters, and non-skipping of repeat
+        sequences.
         """
 
         expected_output = ["miss", "issi", "ssis", "siss", "issi", "ssip", "sipp", "ippi"]
@@ -50,14 +51,16 @@ class OutputGenerationHelperTest(unittest.TestCase):
 
 class OutputGenerationTest(unittest.TestCase):
     def test_empty_input(self):
-        self.assertEqual(generate_output([]), set([]))
+        self.assertEqual(set(generate_output([])), set([]))
 
     def test_single_word(self):
         """
         Tests decapitalization of letters, and non-exclusion of repeat
-        sequences within one word
+        sequences within one word. NOTE: Requirements specified
+        excluding sequences repeated *in multiple words*, not repeated
+        within words.
         """
-        self.assertEqual(generate_output(["Mississippi"]), {
+        self.assertEqual(set(generate_output(["Mississippi"])), {
             ("ippi", "Mississippi"),
             ("issi", "Mississippi"),
             ("miss", "Mississippi"),
@@ -65,6 +68,19 @@ class OutputGenerationTest(unittest.TestCase):
             ("siss", "Mississippi"),
             ("ssip", "Mississippi"),
             ("ssis", "Mississippi"),
+        })
+
+    def test_sequenc_collision(self):
+        """
+        Tests case-insensitive removal of sequences that appear in
+        multiple words.
+        """
+        self.assertEqual(set(generate_output(["Anthony", "anthem"])), {
+            ("ntho", "Anthony"),
+            ("thon", "Anthony"),
+            ("hony", "Anthony"),
+            ("nthe", "anthem"),
+            ("them", "anthem"),
         })
 
 if __name__ == '__main__':
