@@ -49,5 +49,11 @@ class OutputGenerationTest(unittest.TestCase):
     def test_empty_input(self):
         self.assertEqual(generate_output([]), set([]))
 
+    def test_basic_single_word(self):
+        self.assertEqual(generate_output(["hello"]), {
+            ("hell", "hello"),
+            ("ello", "hello"),
+        })
+
 if __name__ == '__main__':
     unittest.main()

@@ -17,4 +17,9 @@ def get_sub_sequences(word):
         yield "".join(offset_letters).lower()
 
 def generate_output(dictionary):
-    return set([])
+    sequence_record = {}
+    if not dictionary: return set([])
+    word = dictionary[0]
+    for sequence in get_sub_sequences(word):
+        sequence_record[sequence] = word
+    return set(sequence_record.iteritems())
