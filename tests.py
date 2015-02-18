@@ -3,32 +3,6 @@ import os
 
 from main import generate_files, generate_output, get_sub_sequences
 
-class FileGenerationTest(unittest.TestCase):
-    def setUp(self):
-        # Make sure the expected files don't exist yet
-        for fname in ["test_sequences", "test_words"]:
-            if os.path.exists(fname):
-                os.remove(fname)
-
-    def test_files_created(self):
-        """
-        Tests that output files are generated.
-        """
-        # For simplicity this will be the only I/O based test.
-        # For other tests we can use output generation functions.
-
-        self.assertFalse(os.path.exists("test_sequences"))
-        self.assertFalse(os.path.exists("test_words"))
-        generate_files([], sequences_fname="test_sequences", words_fname="test_words")
-        self.assertTrue(os.path.exists("test_sequences"))
-        self.assertTrue(os.path.exists("test_words"))
-
-    def tearDown(self):
-        # So as not to leave a mess
-        for fname in ["test_sequences", "test_words"]:
-            if os.path.exists(fname):
-                os.remove(fname)
-
 class OutputGenerationHelperTest(unittest.TestCase):
 
     def test_get_sub_sequences_empty(self):
@@ -82,6 +56,55 @@ class OutputGenerationTest(unittest.TestCase):
             ("nthe", "anthem"),
             ("them", "anthem"),
         })
+
+class FileGenerationTest(unittest.TestCase):
+
+    # Filenames unlikely to be in use for other things, to avoid sadness
+    # when deleting
+    SEQUENCES_FNAME = "test_sequences.784971024.tmp"
+    WORDS_FNAME = "test_words.7473219.tmp"
+    INPUT_FNAME = "test_input.8932842.tmp"
+
+    def _delete_files(self):
+        for fname in [self.SEQUENCES_FNAME, self.WORDS_FNAME, self.INPUT_FNAME]:
+            if os.path.exists(fname):
+                os.remove(fname)
+
+    def setUp(self):
+        # Make sure the expected files don't exist yet
+        self._delete_files()
+
+    def test_files_created(self):
+        """
+        Tests that output files are generated.
+        """
+        # For simplicity this will be the only I/O based test.
+        # For other tests we can use output generation functions.
+
+        with open(self.INPUT_FNAME, "w") as input_f:
+            input_f.write("Anthony\nanthem")
+
+        self.assertFalse(os.path.exists(self.SEQUENCES_FNAME))
+        self.assertFalse(os.path.exists(self.WORDS_FNAME))
+        generate_files(input_fname=self.INPUT_FNAME, sequences_fname=self.SEQUENCES_FNAME, words_fname=self.WORDS_FNAME)
+        self.assertTrue(os.path.exists(self.SEQUENCES_FNAME))
+        self.assertTrue(os.path.exists(self.WORDS_FNAME))
+
+        with open(self.SEQUENCES_FNAME, "r") as sequences_f, open(self.WORDS_FNAME, "r") as words_f:
+            sequences = sequences_f.read().split("\n")
+            words = words_f.read().split("\n")
+
+        self.assertEqual(set(zip(sequences, words)), {
+            ("ntho", "Anthony"),
+            ("thon", "Anthony"),
+            ("hony", "Anthony"),
+            ("nthe", "anthem"),
+            ("them", "anthem"),
+        })
+
+    def tearDown(self):
+        # So as not to leave a mess
+        self._delete_files()
 
 if __name__ == '__main__':
     unittest.main()

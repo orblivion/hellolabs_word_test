@@ -1,6 +1,13 @@
-def generate_files(dictionary, sequences_fname="sequences", words_fname="words"):
-    open(sequences_fname, "w")
-    open(words_fname, "w")
+def generate_files(input_fname, sequences_fname, words_fname):
+    with open(input_fname, "r") as input_f:
+        input_words = [line.strip() for line in input_f]
+
+    sequences, words = zip(*generate_output(input_words))
+
+    with open(sequences_fname, "w") as sequences_f:
+        sequences_f.write("\n".join(sequences))
+    with open(words_fname, "w") as words_f:
+        words_f.write("\n".join(words))
 
 def get_sub_sequences(word):
     """
