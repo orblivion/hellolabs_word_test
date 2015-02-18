@@ -41,7 +41,10 @@ class OutputGenerationHelperTest(unittest.TestCase):
         self.assertEqual(list(get_sub_sequences("cows")), ["cows"])
 
     def test_get_sub_sequences_multiple(self):
-        # Tests decapitalization of letters, and non-skipping of repeat sequences
+        """
+        Tests decapitalization of letters, and non-skipping of repeat sequences
+        """
+
         expected_output = ["miss", "issi", "ssis", "siss", "issi", "ssip", "sipp", "ippi"]
         self.assertEqual(list(get_sub_sequences("Mississippi")), expected_output)
 
@@ -50,7 +53,10 @@ class OutputGenerationTest(unittest.TestCase):
         self.assertEqual(generate_output([]), set([]))
 
     def test_single_word(self):
-        # Tests decapitalization of letters, and non-skipping of repeat sequences
+        """
+        Tests decapitalization of letters, and non-exclusion of repeat
+        sequences within one word
+        """
         self.assertEqual(generate_output(["Mississippi"]), {
             ("ippi", "Mississippi"),
             ("issi", "Mississippi"),
