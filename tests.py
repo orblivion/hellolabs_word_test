@@ -58,6 +58,8 @@ class OutputGenerationTest(unittest.TestCase):
         })
 
 class FileGenerationTest(unittest.TestCase):
+    # For simplicity, limit the amount of I/O based tests.
+    # For other tests we can use output generation functions.
 
     # Filenames unlikely to be in use for other things, to avoid sadness
     # when deleting
@@ -78,15 +80,17 @@ class FileGenerationTest(unittest.TestCase):
         """
         Tests that output files are generated.
         """
-        # For simplicity this will be the only I/O based test.
-        # For other tests we can use output generation functions.
+        self.assertFalse(os.path.exists(self.SEQUENCES_FNAME))
+        self.assertFalse(os.path.exists(self.WORDS_FNAME))
+        self.assertFalse(os.path.exists(self.INPUT_FNAME))
 
         with open(self.INPUT_FNAME, "w") as input_f:
             input_f.write("Anthony\nanthem")
 
-        self.assertFalse(os.path.exists(self.SEQUENCES_FNAME))
-        self.assertFalse(os.path.exists(self.WORDS_FNAME))
-        generate_files(input_fname=self.INPUT_FNAME, sequences_fname=self.SEQUENCES_FNAME, words_fname=self.WORDS_FNAME)
+        success, msg = generate_files(input_fname=self.INPUT_FNAME,
+                                    sequences_fname=self.SEQUENCES_FNAME,
+                                    words_fname=self.WORDS_FNAME)
+        self.assertTrue(success)
         self.assertTrue(os.path.exists(self.SEQUENCES_FNAME))
         self.assertTrue(os.path.exists(self.WORDS_FNAME))
 
@@ -101,6 +105,16 @@ class FileGenerationTest(unittest.TestCase):
             ("nthe", "anthem"),
             ("them", "anthem"),
         })
+
+    def test_missing_file(self):
+        self.assertFalse(os.path.exists(self.INPUT_FNAME))
+
+        success, msg = generate_files(input_fname=self.INPUT_FNAME,
+                              sequences_fname=self.SEQUENCES_FNAME,
+                              words_fname=self.WORDS_FNAME)
+
+        self.assertFalse(success)
+        self.assertTrue("no such file" in msg.lower(), msg)
 
     def tearDown(self):
         # So as not to leave a mess

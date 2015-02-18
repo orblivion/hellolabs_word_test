@@ -1,6 +1,9 @@
 def generate_files(input_fname, sequences_fname, words_fname):
-    with open(input_fname, "r") as input_f:
-        input_words = [line.strip() for line in input_f]
+    try:
+        with open(input_fname, "r") as input_f:
+            input_words = [line.strip() for line in input_f]
+    except IOError as e:
+        return False, str(e)
 
     sequences, words = zip(*generate_output(input_words))
 
@@ -8,6 +11,8 @@ def generate_files(input_fname, sequences_fname, words_fname):
         sequences_f.write("\n".join(sequences))
     with open(words_fname, "w") as words_f:
         words_f.write("\n".join(words))
+
+    return True, None
 
 def get_sub_sequences(word):
     """
