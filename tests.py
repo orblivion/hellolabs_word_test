@@ -49,10 +49,16 @@ class OutputGenerationTest(unittest.TestCase):
     def test_empty_input(self):
         self.assertEqual(generate_output([]), set([]))
 
-    def test_basic_single_word(self):
-        self.assertEqual(generate_output(["hello"]), {
-            ("hell", "hello"),
-            ("ello", "hello"),
+    def test_single_word(self):
+        # Tests decapitalization of letters, and non-skipping of repeat sequences
+        self.assertEqual(generate_output(["Mississippi"]), {
+            ("ippi", "Mississippi"),
+            ("issi", "Mississippi"),
+            ("miss", "Mississippi"),
+            ("sipp", "Mississippi"),
+            ("siss", "Mississippi"),
+            ("ssip", "Mississippi"),
+            ("ssis", "Mississippi"),
         })
 
 if __name__ == '__main__':
