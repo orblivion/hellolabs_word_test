@@ -2,11 +2,7 @@ This program will take a list of words and produce two output lists. The first o
 
 Sequences are case insensitive. Non-letter characters are not included in sequences. Numbers in particular will interrupt sequences of letters. Non-alphanumeric characters will not.
 
-Example:
-
-    abc7dE-fgh
-
-`defg` and `efgh` are the only valid sequences in the above word.
+For example, for the word `abc7dE-fgh`, `defg` and `efgh` are the only valid sequences.
 
 The sequences output in the first list are all lower case, and do not include non-letter characters. However, the corresponding words in the other output list maintain their original formatting.
 
