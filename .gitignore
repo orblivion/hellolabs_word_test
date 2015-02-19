@@ -1,3 +1,4 @@
 *.pyc
+.*.swp
 /test_sequences
 /test_words
