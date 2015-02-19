@@ -12,7 +12,7 @@ To use the program, put the input list in a file. The output will appear in two 
 
 Designed for Ubuntu. This has no pip dependencies. Just clone the repository:
 
-    $ git clone ...
+    $ git clone https://github.com/orblivion/hellolabs_word_test
 
 (Replace the URL with the appropriate URL if you're looking at a fork or copy hosted elsewhere.)
 
