@@ -67,9 +67,12 @@ def main():
     Parse arguments, read from input file, run the generator, write
     output files.
     """
-    parser = argparse.ArgumentParser(description='Find all sequences of 4 letters in exactly one of a given list of words.')
+    parser = argparse.ArgumentParser(
+        description='Find all sequences of 4 letters in exactly one of a given list of words.')
     parser.add_argument('input_filename', type=str, help='name of file with input words')
-    parser.add_argument('sequences_filename', type=str, help='name of file to output applicable sequences')
+    parser.add_argument('sequences_filename',
+                        type=str,
+                        help='name of file to output applicable sequences')
     parser.add_argument('words_filename',
                         type=str,
                         help='name of file to output corresponding words containing above sequences'
