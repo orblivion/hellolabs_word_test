@@ -2,6 +2,10 @@
 import re, string, argparse, os
 
 def generate_files(input_fname, sequences_fname, words_fname):
+    """
+    Given an input filename and two output filenames, read from the
+    input file and generate the output and write to the output files.
+    """
     if not os.path.exists(input_fname):
         return False, "Cannot find input file: %s" % input_fname
 
@@ -21,7 +25,8 @@ def get_sub_sequences(word):
     """
     Take a word, and yield all four letter sequences, lower cased.
 
-    - Digits are not included, and interrupt the sequence
+    - Digits are not included, and interrupt sequences
+    - Non-alphanumerics are not included, but do not interrupt sequences
     """
     cleaned_word = "".join(ch for ch in word if ch in (string.letters + string.digits))
     # split along numbers
@@ -38,6 +43,11 @@ def get_sub_sequences(word):
             yield "".join(offset_letters).lower()
 
 def generate_output(dictionary):
+    """
+    Input: A list of words as strings
+    Output: A generator that yields (sequence, word) for every sequence
+        that appears in only one word.
+    """
     sequence_record = {}
     for word in dictionary:
         for sequence in get_sub_sequences(word):
@@ -53,6 +63,10 @@ def generate_output(dictionary):
             yield sequence, word
 
 def main():
+    """
+    Parse arguments, read from input file, run the generator, write
+    output files.
+    """
     parser = argparse.ArgumentParser(description='Find all sequences of 4 letters in exactly one of a given list of words.')
     parser.add_argument('input_filename', type=str, help='name of file with input words')
     parser.add_argument('sequences_filename', type=str, help='name of file to output applicable sequences')
