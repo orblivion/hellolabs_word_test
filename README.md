@@ -10,7 +10,7 @@ To use the program, put the input list in a file, each word on its own line. The
 
 # Installation
 
-Designed for Ubuntu. This has no pip dependencies. Just clone the repository:
+Tested on Ubuntu. This has no pip dependencies. Just clone the repository:
 
     $ git clone https://github.com/orblivion/hellolabs_word_test
 
