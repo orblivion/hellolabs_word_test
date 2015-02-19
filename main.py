@@ -80,9 +80,9 @@ def main():
     args = parser.parse_args()
     success, msg = generate_files(args.input_filename, args.sequences_filename, args.words_filename)
     if not success:
-        print msg
+        print "Error: %s" % msg
     else:
-        print "%s and %s printed generated" % (args.sequences_filename, args.words_filename)
+        print "%s and %s generated" % (args.sequences_filename, args.words_filename)
 
 if __name__ == '__main__':
     main()
