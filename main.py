@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import re, string, argparse, os
 
 def generate_files(input_fname, sequences_fname, words_fname):
