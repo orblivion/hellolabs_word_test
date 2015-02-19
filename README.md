@@ -6,7 +6,7 @@ For example, for the word `abc7dE-fgh`, `defg` and `efgh` are the only valid seq
 
 The sequences output in the first list are all lower case, and do not include non-letter characters. However, the corresponding words in the other output list maintain their original formatting.
 
-To use the program, put the input list in a file. The output will appear in two separate files.
+To use the program, put the input list in a file, each word on its own line. The output will appear in two separate files, again with each sequence or word on its own line.
 
 # Installation
 
