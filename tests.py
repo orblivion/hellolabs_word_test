@@ -121,7 +121,7 @@ class FileGenerationTest(unittest.TestCase):
                               words_fname=self.WORDS_FNAME)
 
         self.assertFalse(success)
-        self.assertTrue("no such file" in msg.lower(), msg)
+        self.assertTrue("cannot find" in msg.lower(), msg)
 
     def tearDown(self):
         # So as not to leave a mess

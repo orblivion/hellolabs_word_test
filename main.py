@@ -1,11 +1,11 @@
-import re, string
+import re, string, argparse, os
 
 def generate_files(input_fname, sequences_fname, words_fname):
-    try:
-        with open(input_fname, "r") as input_f:
-            input_words = [line.strip() for line in input_f]
-    except IOError as e:
-        return False, str(e)
+    if not os.path.exists(input_fname):
+        return False, "Cannot find input file: %s" % input_fname
+
+    with open(input_fname, "r") as input_f:
+        input_words = [line.strip() for line in input_f]
 
     sequences, words = zip(*generate_output(input_words))
 
@@ -50,3 +50,21 @@ def generate_output(dictionary):
     for sequence, word in sequence_record.iteritems():
         if word is not None:
             yield sequence, word
+
+def main():
+    parser = argparse.ArgumentParser(description='Find all sequences of 4 letters in exactly one of a given list of words.')
+    parser.add_argument('input_filename', type=str, help='name of file with input words')
+    parser.add_argument('sequences_filename', type=str, help='name of file to output applicable sequences')
+    parser.add_argument('words_filename',
+                        type=str,
+                        help='name of file to output corresponding words containing above sequences'
+                             ' (with repetition as necessary)')
+    args = parser.parse_args()
+    success, msg = generate_files(args.input_filename, args.sequences_filename, args.words_filename)
+    if not success:
+        print msg
+    else:
+        print "%s and %s printed generated" % (args.sequences_filename, args.words_filename)
+
+if __name__ == '__main__':
+    main()
