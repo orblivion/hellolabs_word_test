@@ -1,4 +1,4 @@
-import re
+import re, string
 
 def generate_files(input_fname, sequences_fname, words_fname):
     try:
@@ -22,8 +22,9 @@ def get_sub_sequences(word):
 
     - Digits are not included, and interrupt the sequence
     """
+    cleaned_word = "".join(ch for ch in word if ch in (string.letters + string.digits))
     # split along numbers
-    for segment in re.split("[0-9]*", word):
+    for segment in re.split("[0-9]*", cleaned_word):
         # Create offset versions of the segment.
         # Ex: "general" -> ["general", "eneral", "neral", "eral"]
         offset_segments = [segment[offset_index:] for offset_index in range(4)]

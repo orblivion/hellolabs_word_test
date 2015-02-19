@@ -22,13 +22,13 @@ class OutputGenerationHelperTest(unittest.TestCase):
         self.assertEqual(list(get_sub_sequences("Mississippi")),
             ["miss", "issi", "ssis", "siss", "issi", "ssip", "sipp", "ippi"])
 
-    def test_split_words(self):
+    def test_bad_characters(self):
         """
-        Tests that numbers are not included in sequences, but do split
-        sequences of letters.
+        Tests that numbers are not included in sequences, and split
+        sequences of letters. Tests that non-alphanumerics are not
+        included in sequences, but do *not* split sequences of letters.
         """
-        self.assertEqual(list(get_sub_sequences("abc1defg2hijkl3")),
-            ["defg", "hijk", "ijkl"])
+        self.assertEqual(list(get_sub_sequences("-ab c1de/fg2hijkl3")), ["defg", "hijk", "ijkl"])
 
 class OutputGenerationTest(unittest.TestCase):
     def test_empty_input(self):
@@ -51,7 +51,7 @@ class OutputGenerationTest(unittest.TestCase):
             ("ssis", "Mississippi"),
         })
 
-    def test_sequenc_collision(self):
+    def test_sequence_collision(self):
         """
         Tests case-insensitive removal of sequences that appear in
         multiple words.
